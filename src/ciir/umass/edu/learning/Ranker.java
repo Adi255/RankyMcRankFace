@@ -16,11 +16,7 @@ import ciir.umass.edu.utilities.MergeSorter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import java.util.Set;
+import java.util.*;
 
 //- Some Java 7 file utilities for creating directories
 import java.nio.file.Files;
@@ -196,4 +192,73 @@ public abstract class Ranker {
   public abstract void loadFromString(String fullText);
   public abstract String name();
   public abstract void printParameters();
+  private Random randomGenerator = new Random();
+
+	public List<RankList> rankBestCase(List<RankList> l)
+	{
+		List<RankList> ll = new ArrayList<RankList>();
+		for(int i=0;i<l.size();i++)
+			ll.add(rankBestCase(l.get(i)));
+		return ll;
+	}
+
+	public RankList rankBestCase(RankList rl)
+	{
+		double[] scores = new double[rl.size()];
+		for(int i=0;i<rl.size();i++)
+			scores[i] = rl.get(i).label;
+		int[] idx = MergeSorter.sort(scores, false);
+		return new RankList(rl, idx);
+	}
+
+	public List<RankList> rankWorstCase(List<RankList> l)
+	{
+		List<RankList> ll = new ArrayList<RankList>();
+		for(int i=0;i<l.size();i++)
+			ll.add(rankWorstCase(l.get(i)));
+		return ll;
+	}
+
+	public RankList rankWorstCase(RankList rl)
+	{
+		double[] scores = new double[rl.size()];
+		for(int i=0;i<rl.size();i++)
+			scores[i] = rl.get(i).label;
+		int[] idx = MergeSorter.sort(scores, true);
+		return new RankList(rl, idx);
+	}
+
+	public List<RankList> rankFeature1(List<RankList> l)
+	{
+		List<RankList> ll = new ArrayList<RankList>();
+		for(int i=0;i<l.size();i++)
+			ll.add(rankFeature1(l.get(i)));
+		return ll;
+	}
+
+	public RankList rankFeature1(RankList rl)
+	{
+		double[] scores = new double[rl.size()];
+		for(int i=0;i<rl.size();i++)
+			scores[i] = rl.get(i).getFeatureValue(1);
+		int[] idx = MergeSorter.sort(scores, false);
+		return new RankList(rl, idx);
+	}
+
+	public List<RankList> rankRandom(List<RankList> l)
+	{
+		List<RankList> ll = new ArrayList<RankList>();
+		for(int i=0;i<l.size();i++)
+			ll.add(rankRandom(l.get(i)));
+		return ll;
+	}
+
+	public RankList rankRandom(RankList rl)
+	{
+		double[] scores = new double[rl.size()];
+		for(int i=0;i<rl.size();i++)
+			scores[i] = randomGenerator.nextDouble();
+		int[] idx = MergeSorter.sort(scores, false);
+		return new RankList(rl, idx);
+	}
 }

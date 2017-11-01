@@ -348,14 +348,14 @@ public class RankBoost extends Ranker {
 			rWeight.addAll(bestModelWeights);
 		}
 		
-		scoreOnTrainingData = SimpleMath.round(scorer.score(rank(samples)), 4);
+		scoreOnTrainingData = SimpleMath.round(scorer.score(rank(samples)), 6);
 		PRINTLN("--------------------------------------------------------------------");
 		PRINTLN("Finished sucessfully.");
 		PRINTLN(scorer.name() + " on training data: " + scoreOnTrainingData);
 		if(validationSamples != null)
 		{
 			bestScoreOnValidationData = scorer.score(rank(validationSamples));
-			PRINTLN(scorer.name() + " on validation data: " + SimpleMath.round(bestScoreOnValidationData, 4));
+			PRINTLN(scorer.name() + " on validation data: " + SimpleMath.round(bestScoreOnValidationData, 6));
 		}
 		PRINTLN("---------------------------------");
 	}

@@ -107,11 +107,11 @@ public class RFRanker extends Ranker {
 		scoreOnTrainingData = scorer.score(rank(samples));
 		PRINTLN("------------------------------------");
 		PRINTLN("Finished sucessfully.");
-		PRINTLN(scorer.name() + " on training data: " + SimpleMath.round(scoreOnTrainingData, 4));
+		PRINTLN(scorer.name() + " on training data: " + SimpleMath.round(scoreOnTrainingData, 6));
 		if(validationSamples != null)
 		{
 			bestScoreOnValidationData = scorer.score(rank(validationSamples));
-			PRINTLN(scorer.name() + " on validation data: " + SimpleMath.round(bestScoreOnValidationData, 4));
+			PRINTLN(scorer.name() + " on validation data: " + SimpleMath.round(bestScoreOnValidationData, 6));
 		}
 		PRINTLN("------------------------------------");
 

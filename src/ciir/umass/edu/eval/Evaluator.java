@@ -736,6 +736,7 @@ public class Evaluator {
 		{
 			double rankScore = evaluate(ranker, test);
 			System.out.println(testScorer.name() + " on test data: " + SimpleMath.round(rankScore, 4));
+			printBenchmarks(ranker, test);
 		}
 		if(modelFile.compareTo("")!=0)
 		{
@@ -774,6 +775,7 @@ public class Evaluator {
 		double rankScore = evaluate(ranker, testData);
 		
 		System.out.println(testScorer.name() + " on test data: " + SimpleMath.round(rankScore, 4));
+		printBenchmarks(ranker, testData);
 		if(modelFile.compareTo("")!=0)
 		{
 			System.out.println("");
@@ -813,6 +815,7 @@ public class Evaluator {
 		{
 			double rankScore = evaluate(ranker, test);		
 			System.out.println(testScorer.name() + " on test data: " + SimpleMath.round(rankScore, 4));
+			printBenchmarks(ranker, test);
 		}
 		if(modelFile.compareTo("")!=0)
 		{
@@ -989,6 +992,7 @@ public class Evaluator {
 		ids.add("all");
 		scores.add(rankScore);		
 		System.out.println(testScorer.name() + " on test data: " + SimpleMath.round(rankScore, 4));
+		printBenchmarks(ranker, test);
 
 		//if(prpFile.compareTo("") != 0)
 		if (!prpFile.isEmpty())
@@ -1461,5 +1465,16 @@ public class Evaluator {
 		{
 			throw RankLibError.create("Error in Evaluator::savePerRankListPerformanceFile(): ", ex);
 		}
+	}
+
+	private void printBenchmarks(Ranker ranker, List<RankList> testData){
+		System.out.println("Best case ordering: " + testScorer.score(ranker.rankBestCase(testData)));
+		System.out.println("Worst case ordering: " + testScorer.score(ranker.rankWorstCase(testData)));
+		System.out.println("Ordered by feature 1, descending: " + testScorer.score(ranker.rankFeature1(testData)));
+		int iterations = 100;
+		double totalScore = 0;
+		for(int i=0;i<iterations;i++)
+			totalScore += testScorer.score(ranker.rankRandom(testData));
+		System.out.println("Random ordering (mean " + testScorer.name() + " from " + iterations + " iterations): " + totalScore/((double)iterations));
 	}
 }
