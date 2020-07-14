@@ -21,7 +21,7 @@ import java.util.Arrays;
  */
 public abstract class DataPoint {
 	
-	public static int MAX_FEATURE = 51;
+	public static int MAX_FEATURE = 101;
 	public static int FEATURE_INCREASE = 10;
 	protected static int featureCount = 0;
 	
